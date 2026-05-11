@@ -1,14 +1,14 @@
 export default defineNuxtConfig({
-  compatibilityDate: '2024-04-03',
-  future: {
-    compatibilityVersion: 4
-  },
+  compatibilityDate: '2024-11-01',
   modules: [
     '@nuxtjs/tailwindcss',
     '@nuxt/icon',
     'nuxt-auth-utils'
   ],
-  // Kita matikan nuxthub database sementara agar tidak bentrok
+  // Matikan hub blob karena kita sudah pakai cara manual fs
+  hub: {
+    database: true 
+  },
   nitro: {
     externals: {
       external: ['better-sqlite3']

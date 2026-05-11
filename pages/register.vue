@@ -50,31 +50,39 @@ const form = ref({
 
 const loading = ref(false) // Harus FALSE di awal
 
+// pages/register.vue - Bagian <script setup>
 async function handleRegister() {
-  console.log("Tombol diklik, mencoba mendaftar...");
+  // Validasi Frontend Sederhana
+  if (!form.value.email.endsWith('@students.undip.ac.id')) {
+    return alert("Gunakan email @students.undip.ac.id")
+  }
   
-  if (form.value.password !== form.value.konfirmasi) {
-    alert("Kata sandi tidak cocok!")
-    return
+  if (form.value.nim.length !== 14) {
+    return alert("NIM harus 14 digit angka!")
   }
 
-  loading.value = true // Tombol jadi disabled saat diproses
+  const hasUpper = /[A-Z]/.test(form.value.password)
+  const hasSymbol = /[.\-_]/.test(form.value.password)
+  if (form.value.password.length < 8 || !hasUpper || !hasSymbol) {
+    return alert("Sandi minimal 8 karakter, ada Huruf Kapital, dan Simbol (.-_)")
+  }
 
+  if (form.value.password !== form.value.konfirmasi) {
+    return alert("Konfirmasi sandi tidak cocok!")
+  }
+
+  loading.value = true
   try {
-    const response = await $fetch('/api/auth/register', {
+    await $fetch('/api/auth/register', {
       method: 'POST',
       body: form.value
     })
-    
-    console.log("Hasil server:", response);
-    alert("Berhasil mendaftar!");
-    navigateTo('/')
+    // Gunakan window.location agar layout sidebar segar kembali
+    window.location.href = '/'
   } catch (err) {
-    console.error("Error pendaftaran:", err);
-    // Tampilkan pesan error spesifik dari server
-    alert("Gagal Daftar: " + (err.data?.message || "Terjadi kesalahan koneksi"));
+    alert(err.data?.message || "Gagal mendaftar")
   } finally {
-    loading.value = false // Kembalikan tombol agar bisa diklik lagi jika gagal
+    loading.value = false
   }
 }
 </script>

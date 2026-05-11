@@ -11,6 +11,7 @@ export const users = sqliteTable('users', {
   role: text('role').$type<'user' | 'admin'>().default('user'),
 })
 
+// server/database/schema.ts
 export const complaints = sqliteTable('complaints', {
   id: integer('id').primaryKey({ autoIncrement: true }),
   userId: integer('user_id').references(() => users.id),
@@ -19,6 +20,23 @@ export const complaints = sqliteTable('complaints', {
   lokasi: text('lokasi').notNull(),
   deskripsi: text('deskripsi').notNull(),
   status: text('status').$type<'Pending' | 'Diproses' | 'Selesai' | 'Ditolak'>().default('Pending'),
+  gambar: text('gambar'),
+  // Tambahkan baris ini untuk menampung balasan admin
+  tanggapanAdmin: text('tanggapan_admin'), 
   createdAt: text('created_at').$defaultFn(() => new Date().toISOString()),
 })
+
+// server/database/schema.ts
+
+export const notifications = sqliteTable('notifications', {
+  id: integer('id').primaryKey({ autoIncrement: true }),
+  userId: integer('user_id').references(() => users.id), // Penerima notif
+  title: text('title').notNull(),
+  message: text('message').notNull(),
+  link: text('link').notNull(), // URL tujuan saat diklik (misal: /aduan-saya/5)
+  isRead: integer('is_read').default(0), // 0: belum dibaca, 1: sudah
+  createdAt: text('created_at').$defaultFn(() => new Date().toISOString()),
+})
+
+
 
