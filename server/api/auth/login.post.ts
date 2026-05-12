@@ -1,18 +1,20 @@
 import { users } from '~/server/database/schema'
-import { eq, and } from 'drizzle-orm'
+import { comparePassword } from '~/server/utils/password'
+import { eq } from 'drizzle-orm'
 
 export default eventHandler(async (event) => {
   const body = await readBody(event)
   
   const result = await db.select().from(users).where(
-    and(
-      eq(users.email, body.email),
-      eq(users.password, body.password)
-    )
+    eq(users.email, body.email)
   ).limit(1)
 
   const user = result[0]
   if (!user) throw createError({ statusCode: 401, message: 'Email/Password salah' })
+
+  // Compare plaintext password with hashed password
+  const passwordMatch = await comparePassword(body.password, user.password)
+  if (!passwordMatch) throw createError({ statusCode: 401, message: 'Email/Password salah' })
 
   await setUserSession(event, {
     user: {

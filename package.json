@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@nuxthub/core": "^0.10.7",
+    "@types/bcrypt": "^6.0.0",
+    "bcrypt": "^6.0.0",
     "better-sqlite3": "^12.9.0",
     "drizzle-orm": "^0.45.2",
     "nuxt": "^4.4.4",
