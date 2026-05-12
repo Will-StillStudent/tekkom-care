@@ -42,9 +42,13 @@ export default defineEventHandler(async (event) => {
       role: 'user'
     }).returning()
 
+    if (!newUser || newUser.length === 0) {
+      throw createError({ statusCode: 500, message: 'Gagal membuat user' })
+    }
+
     // Login Otomatis
     await setUserSession(event, {
-      user: { id: newUser[0].id, nama: newUser[0].nama, email: newUser[0].email, role: 'user' }
+      user: { id: newUser[0]!.id, nama: newUser[0]!.nama, email: newUser[0]!.email, role: newUser[0]!.role }
     })
 
     return { success: true }
