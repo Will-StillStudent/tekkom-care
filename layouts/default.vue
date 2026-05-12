@@ -1,8 +1,11 @@
 <template>
   <div class="flex min-h-screen bg-[#f3f6f9] font-sans text-slate-700 overflow-x-hidden">
     
+    <!-- MOBILE SIDEBAR BACKDROP -->
+    <div v-if="isSidebarOpen" @click="isSidebarOpen = false" class="fixed inset-0 bg-black/50 z-30 lg:hidden"></div>
+    
     <!-- SIDEBAR (Biru Gelap - Muncul di Desktop) -->
-    <aside class="hidden lg:flex w-72 bg-[#123565] text-white flex-col fixed h-full z-40 shadow-xl transition-all duration-300">
+    <aside :class="['w-72 bg-[#123565] text-white flex-col fixed h-full z-40 shadow-xl transition-transform duration-300 ease-in-out flex', isSidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0']">
       
       <!-- LOGO -->
       <div class="p-8 flex items-center gap-3">
@@ -66,9 +69,16 @@
       
       <!-- HEADER ATAS -->
       <header class="h-20 bg-white border-b border-slate-200 px-4 md:px-8 lg:px-12 flex items-center justify-between sticky top-0 z-30 backdrop-blur-md bg-white/80">
-        <h2 class="font-bold text-slate-800 text-lg md:text-xl tracking-tight capitalize truncate mr-4">
-          {{ displayTitle }}
-        </h2>
+        <div class="flex items-center gap-3">
+          <!-- HAMBURGER BUTTON (Hanya di Mobile) -->
+          <button @click="isSidebarOpen = !isSidebarOpen" class="lg:hidden text-slate-600 hover:text-slate-800 hover:bg-slate-100 p-2 rounded-lg transition-colors">
+            <Icon name="ph:list-bold" size="24"/>
+          </button>
+          
+          <h2 class="font-bold text-slate-800 text-lg md:text-xl tracking-tight capitalize truncate">
+            {{ displayTitle }}
+          </h2>
+        </div>
         
         <div class="flex items-center gap-3 md:gap-5 flex-shrink-0">
           
@@ -137,6 +147,9 @@
 const route = useRoute()
 const { user, clear } = useUserSession()
 
+// State untuk sidebar mobile
+const isSidebarOpen = ref(false)
+
 // 1. Ambil data notifikasi asli dari server
 const { data: notifs, refresh } = await useFetch('/api/notifications')
 
@@ -152,6 +165,11 @@ const displayTitle = computed(() => {
   if (path.includes('aduan-saya')) return 'Daftar Aduan'
   if (path.includes('kelola')) return 'Kelola Pengaduan'
   return 'TekkomCare'
+})
+
+// Tutup sidebar saat navigasi
+watch(() => route.path, () => {
+  isSidebarOpen.value = false
 })
 
 // layouts/default.vue
