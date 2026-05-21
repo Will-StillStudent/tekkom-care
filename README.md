@@ -44,8 +44,10 @@ TekkomCare adalah aplikasi web modern yang dirancang khusus untuk mengelola peng
 
 ### Instalasi Dependencies
 Pastikan Node.js (Versi 18+) sudah terinstall di komputer Anda:
+
 ```bash
 npm install
+```
 
 ## Development Server
 
