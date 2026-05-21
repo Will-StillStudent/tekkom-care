@@ -1,32 +1,51 @@
-# TekkomCare - Sistem Manajemen Pengaduan
+# 🛠️ TekkomCare - Sistem Manajemen Pengaduan Fasilitas
 
-TekkomCare adalah aplikasi web untuk mengelola pengaduan dan keluhan dari mahasiswa Teknik Komputer UNDIP. Platform ini memungkinkan mahasiswa untuk membuat pengaduan, melacak status, dan menerima notifikasi real-time, sementara admin dapat mengelola dan merespons pengaduan dengan efisien.
+TekkomCare adalah aplikasi web modern yang dirancang khusus untuk mengelola pengaduan dan keluhan fasilitas dari mahasiswa Teknik Komputer Universitas Diponegoro. Platform ini menjembatani mahasiswa (User) dan pengelola departemen (Admin) untuk mewujudkan proses perbaikan fasilitas kampus yang lebih cepat, transparan, dan efisien.
 
-## Fitur Utama
+![Nuxt](https://img.shields.io/badge/Nuxt-4.x-green?style=for-the-badge&logo=nuxt.js)
+![Drizzle](https://img.shields.io/badge/Drizzle-ORM-C5F74F?style=for-the-badge&logo=drizzle)
+![SQLite](https://img.shields.io/badge/SQLite-Database-003B57?style=for-the-badge&logo=sqlite)
+![Tailwind](https://img.shields.io/badge/Tailwind_CSS-3.4-blue?style=for-the-badge&logo=tailwind-css)
 
-- **Buat Pengaduan**: Mahasiswa dapat membuat pengaduan baru dengan kategori, lokasi, dan deskripsi
-- **Dashboard Admin**: Admin dapat melihat statistik dan mengelola semua pengaduan
-- **Notifikasi Real-time**: Sistem notifikasi untuk update pengaduan
-- **Autentikasi Aman**: Login dengan email UNDIP dan password terenkripsi
-- **Role-based Access**: Pembedaan hak akses antara admin dan user
-- **Responsive Design**: Desain mobile-friendly dengan sidebar yang dapat dikontrol
+---
 
-## _Tech Stack_
+## ✨ Fitur Utama
 
-- **Framework**: Nuxt 4
+### 👨‍🎓 Sisi Mahasiswa (User)
+- **Otentikasi Kampus Ketat**: 
+  - Registrasi wajib menggunakan Email Resmi UNDIP (`@students.undip.ac.id`).
+  - Validasi NIM wajib 14 digit angka.
+  - Keamanan password minimal 8 karakter, disertai huruf Kapital dan karakter unik (`.`, `-`, atau `_`).
+- **Sistem Pengaduan**: Membuat laporan dengan kategori (Fasilitas, SDM, Lingkungan) dan lokasi spesifik.
+- **Upload Foto Bukti**: Mendukung unggah foto bukti kerusakan dengan fitur *Drag & Drop*.
+- **Pelacakan Real-time**: Memantau status aduan (*Pending*, *Diproses*, *Selesai*, atau *Ditolak*).
+- **Notifikasi Lonceng**: Mendapatkan pemberitahuan instan saat admin memberikan tanggapan.
+
+### 👨‍💼 Sisi Administrator (Admin)
+- **Dashboard Analitik**: Melihat statistik total aduan dan distribusi kategori secara visual.
+- **Manajemen Aduan Global**: Mengelola seluruh laporan dari satu tabel terpusat.
+- **Quick Action**: Mengubah status aduan dan memberikan tanggapan teknis langsung di halaman kelola.
+- **Sistem Pencarian & Filter**: Mencari aduan berdasarkan judul atau lokasi kejadian dengan cepat.
+
+---
+
+## 🚀 _Tech Stack_
+- **Framework**: Nuxt 4 (Preview) / Vue 3
 - **Database**: SQLite dengan Drizzle ORM
 - **Styling**: Tailwind CSS
-- **UI Icons**: Phosphor Icons
-- **Authentication**: Nuxt Auth Utils
+- **UI Icons**: Phosphor Icons (@nuxt/icon)
+- **Authentication**: Nuxt Auth Utils (Session Based)
 - **Password Hashing**: bcrypt
+- **File Storage**: Local File System Storage (`/public/uploads`)
 
-## Setup
+---
 
-Pastikan semua dependencies terinstall:
+## 🛠️ Panduan Instalasi & Setup
 
+### Instalasi Dependencies
+Pastikan Node.js (Versi 18+) sudah terinstall di komputer Anda:
 ```bash
 npm install
-```
 
 ## Development Server
 
@@ -81,4 +100,7 @@ tekkom-care/
 
 ## Credits
 
-- **Muhammad Habiburrahman** (Project Manager, Quality Assurance)
+**Yusuf Afaf Nur** (UI/UX Designer)
+**Willybrordus Anugrah Gusti** (Front-End Developer)
+**Reizal Haidar Akmal** (Back-End Developer)
+**Muhammad Habiburrahman** (Project Manager, Quality Assurance)
