@@ -1,5 +1,5 @@
 import { users } from '~/server/database/schema'
-import { hashPassword } from '~/server/utils/password'
+import { hashAppPassword } from '~/server/utils/password'
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event)
@@ -31,7 +31,7 @@ export default defineEventHandler(async (event) => {
 
   try {
     // Hash password before storing
-    const hashedPassword = await hashPassword(password)
+    const hashedPassword = await hashAppPassword(password)
 
     // Simpan ke database (db manual dari server/utils/db.ts)
     const newUser = await db.insert(users).values({

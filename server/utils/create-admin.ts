@@ -1,7 +1,7 @@
 import { createInterface } from 'readline'
 import { db } from './db'
 import { users } from '../database/schema'
-import { hashPassword } from './password'
+import { hashAppPassword } from './password'
 import { eq } from 'drizzle-orm'
 
 const requiredFields = ['nama', 'nim', 'email', 'password'] as const
@@ -98,7 +98,7 @@ async function main() {
 
     await ensureUnique(email, nim)
 
-    const hashedPassword = await hashPassword(password)
+    const hashedPassword = await hashAppPassword(password)
 
     const result = await db.insert(users).values({
       nama,

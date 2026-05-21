@@ -5,7 +5,7 @@ const SALT_ROUNDS = 10
 /**
  * Hash a plaintext password
  */
-export async function hashPassword(password: string): Promise<string> {
+export async function hashAppPassword(password: string): Promise<string> {
   return bcrypt.hash(password, SALT_ROUNDS)
 }
 

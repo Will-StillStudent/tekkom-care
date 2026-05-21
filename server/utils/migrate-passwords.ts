@@ -7,7 +7,7 @@
 
 import { db } from './db'
 import { users } from '../database/schema'
-import { hashPassword } from './password'
+import { hashAppPassword } from './password'
 import { eq } from 'drizzle-orm'
 
 async function migratePasswords() {
@@ -30,7 +30,7 @@ async function migratePasswords() {
       }
 
       try {
-        const hashedPassword = await hashPassword(user.password)
+        const hashedPassword = await hashAppPassword(user.password)
         await db.update(users)
           .set({ password: hashedPassword })
           .where(eq(users.id, user.id))
