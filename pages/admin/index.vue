@@ -16,7 +16,7 @@
         <div class="space-y-8">
           <div v-for="cat in categoryList" :key="cat.name" class="space-y-3">
             <div class="flex justify-between text-[11px] font-black uppercase text-slate-400 tracking-wider">
-              <span class="flex items-center gap-2"> {{ cat.icon }} {{ cat.name }}</span>
+              <span class="flex items-center gap-2">{{ cat.name }}</span>
               <span>{{ cat.value }}</span>
             </div>
             <div class="h-2 bg-slate-100 rounded-full overflow-hidden">
@@ -51,9 +51,6 @@
       <div class="bg-white border border-slate-200 rounded-[32px] overflow-hidden">
         <div v-for="item in data.recent" :key="item.id" class="p-6 border-b border-slate-50 last:border-0 flex items-center justify-between">
           <div class="flex items-center gap-5">
-            <div class="p-4 bg-slate-100 rounded-2xl text-xl">
-              {{ item.kategori.includes('Fasilitas') ? '🏛️' : item.kategori.includes('SDM') ? '👤' : '🌿' }}
-            </div>
             <div>
               <h4 class="font-bold text-slate-800 text-sm">{{ item.judul }}</h4>
               <p class="text-[10px] text-slate-400 mt-1 font-bold uppercase tracking-wider">{{ item.lokasi }} · {{ item.createdAt.split('T')[0] }}</p>
@@ -82,9 +79,9 @@ const mainStats = computed(() => [
 ])
 
 const categoryList = computed(() => [
-  { name: 'Fasilitas', value: data.value?.categories.fasilitas, icon: '🏛️' },
-  { name: 'SDM', value: data.value?.categories.sdm, icon: '👤' },
-  { name: 'Lingkungan', value: data.value?.categories.lingkungan, icon: '🌿' },
+  { name: 'Fasilitas', value: data.value?.categories.fasilitas },
+  { name: 'SDM', value: data.value?.categories.sdm },
+  { name: 'Lingkungan', value: data.value?.categories.lingkungan },
 ])
 
 const statusList = computed(() => [

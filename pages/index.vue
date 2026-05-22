@@ -3,7 +3,7 @@
     <!-- WELCOME BANNER (Sesuai Gambar 3) -->
     <div class="bg-[#123565] rounded-[32px] p-10 text-white relative overflow-hidden shadow-xl shadow-blue-900/10">
       <div class="relative z-10">
-        <h1 class="text-3xl font-bold mb-2">Selamat datang, {{ user?.nama || 'User' }}! 👋</h1>
+        <h1 class="text-3xl font-bold mb-2">Selamat datang, {{ user?.nama || 'User' }}!</h1>
         <p class="opacity-60 text-sm mb-8 max-w-md">Sampaikan aduanmu dengan mudah dan pantau perkembangannya di sini.</p>
         <NuxtLink to="/buat-aduan" class="bg-[#38bdf8] text-[#123565] px-6 py-3 rounded-2xl font-black text-sm inline-flex items-center gap-2 hover:scale-105 transition shadow-lg shadow-cyan-400/20">
           <Icon name="ph:plus-bold" /> Buat Aduan Baru
