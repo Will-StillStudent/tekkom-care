@@ -100,6 +100,13 @@ const filteredData = computed(() => {
 const downloadPDF = () => {
   const doc = new jsPDF()
   
+  // Fungsi untuk membersihkan emoji dan karakter spesial
+  const sanitizeText = (text) => {
+    if (!text) return ''
+    // Hapus semua karakter di luar ASCII dan Latin-1 Supplement (mempertahankan teks bahasa Indonesia)
+    return text.replace(/[^\x20-\x7E\xA0-\xFF]/g, '').trim()
+  }
+  
   // 1. Tambahkan Header Laporan
   doc.setFontSize(18)
   doc.setTextColor(18, 53, 101) // Warna #123565
@@ -111,14 +118,14 @@ const downloadPDF = () => {
   doc.text(`Dicetak pada: ${new Date().toLocaleString('id-ID')}`, 14, 35)
   doc.line(14, 40, 196, 40) // Garis pembatas
 
-  // 2. Siapkan Data untuk Tabel
+  // 2. Siapkan Data untuk Tabel (dengan sanitasi kategori)
   const tableRows = filteredData.value.map(item => [
     `#${item.id}`,
-    item.judul,
-    item.kategori,
-    item.lokasi,
+    sanitizeText(item.judul),
+    sanitizeText(item.kategori),
+    sanitizeText(item.lokasi),
     formatDate(item.createdAt),
-    item.status
+    sanitizeText(item.status)
   ])
 
   // 3. Gambar Tabel
@@ -127,7 +134,7 @@ const downloadPDF = () => {
     head: [['ID', 'Judul Aduan', 'Kategori', 'Lokasi', 'Tanggal', 'Status']],
     body: tableRows,
     headStyles: { fillColor: [18, 53, 101], textColor: [255, 255, 255], fontStyle: 'bold' },
-    styles: { fontSize: 8, cellPadding: 4 },
+    styles: { fontSize: 8, cellPadding: 4, font: 'helvetica' },
     alternateRowStyles: { fillColor: [245, 247, 250] }
   })
 
