@@ -102,7 +102,7 @@ tekkom-care/
 
 ## Credits
 
-**Yusuf Afaf Nur** (UI/UX Designer)
+**Yusuf Afaf Nur Abdillah** (UI/UX Designer)
 **Willybrordus Anugrah Gusti** (Front-End Developer)
 **Reizal Haidar Akmal** (Back-End Developer)
 **Muhammad Habiburrahman** (Project Manager, Quality Assurance)
