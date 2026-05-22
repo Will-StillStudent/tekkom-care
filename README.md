@@ -57,19 +57,6 @@ Jalankan development server di `http://localhost:3000`:
 npm run dev
 ```
 
-## Migrasi Password (PENTING!!!)
-
-Jika Anda memiliki pengguna dengan password plaintext di database, jalankan script migrasi untuk mengenkripsi semua password:
-
-```bash
-npx tsx server/utils/migrate-passwords.ts
-```
-
-Script ini akan:
-- Mendeteksi password yang sudah terenkripsi (tidak akan diubah)
-- Mengenkripsi semua password plaintext menggunakan bcrypt
-- Menampilkan ringkasan hasil migrasi
-
 ## Production
 
 Build aplikasi untuk production:
@@ -102,7 +89,7 @@ tekkom-care/
 
 ## Credits
 
-**Yusuf Afaf Nur Abdillah** (UI/UX Designer)
-**Willybrordus Anugrah Gusti** (Front-End Developer)
-**Reizal Haidar Akmal** (Back-End Developer)
-**Muhammad Habiburrahman** (Project Manager, Quality Assurance)
+- **Yusuf Afaf Nur Abdillah** (UI/UX Designer)
+- **Willybrordus Anugrah Gusti** (Front-End Developer)
+- **Reizal Haidar Akmal** (Back-End Developer)
+- **Muhammad Habiburrahman** (Project Manager, Quality Assurance)
