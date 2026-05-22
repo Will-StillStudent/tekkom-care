@@ -75,12 +75,14 @@
 </template>
 
 <script setup>
+// Middleware untuk proteksi admin
+definePageMeta({
+  middleware: 'admin'
+})
+
 // Import library PDF
 import jsPDF from 'jspdf'
 import autoTable from 'jspdf-autotable'
-
-const { user } = useUserSession()
-if (user.value?.role !== 'admin') navigateTo('/')
 
 const { data: allComplaints, refresh } = await useFetch('/api/admin/all')
 const currentFilter = ref('Semua')

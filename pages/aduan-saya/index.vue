@@ -3,7 +3,7 @@
     <!-- Judul Halaman (Dibuat lebih dinamis) -->
     <h1 class="text-2xl font-bold text-[#123565] lg:hidden mb-4">Aduan Saya</h1>
 
-    <!-- 1. Filter Tabs: Gunakan flex-wrap agar tombol turun ke bawah jika layar sempit -->
+    <!-- 1. Filter Tabs & Export Button -->
     <div class="flex flex-wrap gap-2 bg-white p-2 rounded-2xl border border-slate-200 w-full sm:w-fit shadow-sm">
       <button 
         v-for="tab in ['Semua', 'Pending', 'Diproses', 'Selesai', 'Ditolak']" 
@@ -13,6 +13,13 @@
         :class="currentTab === tab ? 'bg-[#123565] text-white shadow-lg' : 'text-slate-400 hover:bg-slate-50'"
       >
         {{ tab }}
+      </button>
+      <button 
+        @click="downloadPDF"
+        class="flex items-center justify-center gap-2 bg-red-500 hover:bg-red-600 text-white px-4 md:px-6 py-2 rounded-xl text-[10px] font-bold transition shadow-lg shadow-red-500/20"
+      >
+        <Icon name="ph:file-pdf-bold" size="14" />
+        <span class="hidden sm:inline">PDF</span>
       </button>
     </div>
 
@@ -63,6 +70,9 @@
 </template>
 
 <script setup>
+import jsPDF from 'jspdf'
+import autoTable from 'jspdf-autotable'
+
 const currentTab = ref('Semua')
 const { data: allComplaints } = await useFetch('/api/complaints/user')
 
@@ -71,6 +81,52 @@ const filteredComplaints = computed(() => {
   if (currentTab.value === 'Semua') return allComplaints.value
   return allComplaints.value.filter(c => c.status === currentTab.value)
 })
+
+// Fungsi untuk membersihkan emoji dan karakter spesial
+const sanitizeText = (text) => {
+  if (!text) return ''
+  // Hapus semua karakter di luar ASCII dan Latin-1 Supplement (mempertahankan teks bahasa Indonesia)
+  return text.replace(/[^\x20-\x7E\xA0-\xFF]/g, '').trim()
+}
+
+// --- FUNGSI DOWNLOAD PDF ---
+const downloadPDF = () => {
+  const doc = new jsPDF()
+  
+  // 1. Tambahkan Header Laporan
+  doc.setFontSize(18)
+  doc.setTextColor(18, 53, 101) // Warna #123565
+  doc.text('DAFTAR ADUAN SAYA', 14, 22)
+  
+  doc.setFontSize(10)
+  doc.setTextColor(100)
+  doc.text('TekkomCare - Portal Pengaduan Teknik Komputer', 14, 30)
+  doc.text(`Dicetak pada: ${new Date().toLocaleString('id-ID')}`, 14, 35)
+  doc.line(14, 40, 196, 40) // Garis pembatas
+
+  // 2. Siapkan Data untuk Tabel (dengan sanitasi kategori)
+  const tableRows = filteredComplaints.value.map(item => [
+    `#${item.id}`,
+    sanitizeText(item.judul),
+    sanitizeText(item.kategori),
+    sanitizeText(item.lokasi),
+    formatDate(item.createdAt),
+    sanitizeText(item.status)
+  ])
+
+  // 3. Gambar Tabel
+  autoTable(doc, {
+    startY: 45,
+    head: [['ID', 'Judul Aduan', 'Kategori', 'Lokasi', 'Tanggal', 'Status']],
+    body: tableRows,
+    headStyles: { fillColor: [18, 53, 101], textColor: [255, 255, 255], fontStyle: 'bold' },
+    styles: { fontSize: 8, cellPadding: 4, font: 'helvetica' },
+    alternateRowStyles: { fillColor: [245, 247, 250] }
+  })
+
+  // 4. Download File
+  doc.save(`Daftar_Aduan_Saya_${currentTab.value}.pdf`)
+}
 
 const statusStyle = (status) => {
   if (status === 'Pending') return 'bg-yellow-50 text-yellow-600 border-yellow-100'

@@ -66,6 +66,11 @@
 </template>
 
 <script setup>
+// Middleware untuk proteksi admin
+definePageMeta({
+  middleware: 'admin'
+})
+
 // Ambil data statistik riil
 const { data } = await useFetch('/api/admin/stats')
 

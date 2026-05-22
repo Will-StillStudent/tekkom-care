@@ -103,6 +103,11 @@
 </template>
 
 <script setup>
+// Middleware untuk proteksi admin
+definePageMeta({
+  middleware: 'admin'
+})
+
 const route = useRoute()
 const isUpdating = ref(false)
 const { data: item, refresh } = await useFetch(`/api/complaints/${route.params.id}`)
